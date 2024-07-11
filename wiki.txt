@@ -1,2 +1,5 @@
 VITE:
 npm create vite@latest
+
+TAILWIND:
+https://tailwindcss.com/docs/installation
