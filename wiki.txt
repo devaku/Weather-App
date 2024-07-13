@@ -8,14 +8,16 @@ https://tailwindcss.com/docs/installation
 https://openweathermap.org/forecast5
 
 Things to show:
-Time of Data Forecasted
+
+Weather icon
+Date
 Temperature (switchable to Metric (c)/Imperial(f))
 Feels Like (switchable to Metric (c)/Imperial(f))
 Lowest Temperature (switchable to Metric (c)/Imperial(f))
 Highest Temperature (switchable to Metric (c)/Imperial(f))
-Humidity (in percentage)
+
 Weather Description (Rain, Snow, Sunny)
-Weather icon
+Humidity (in percentage)
 Wind Speed (switchable to Metric (c)/Imperial(f))
 
 City Name,
