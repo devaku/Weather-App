@@ -3,3 +3,29 @@ npm create vite@latest
 
 TAILWIND:
 https://tailwindcss.com/docs/installation
+
+
+https://openweathermap.org/forecast5
+
+Things to show:
+Time of Data Forecasted
+Temperature (switchable to Metric (c)/Imperial(f))
+Feels Like (switchable to Metric (c)/Imperial(f))
+Lowest Temperature (switchable to Metric (c)/Imperial(f))
+Highest Temperature (switchable to Metric (c)/Imperial(f))
+Humidity (in percentage)
+Weather Description (Rain, Snow, Sunny)
+Weather icon
+Wind Speed (switchable to Metric (c)/Imperial(f))
+
+City Name,
+City Country
+City Timezone (UTC)
+city Sunrise (UTC)
+City Sunset (UTC)
+
+
+
+
+https://openweathermap.org/api/geocoding-api
+https://openweathermap.org/current
