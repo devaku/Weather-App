@@ -8,7 +8,7 @@ function App() {
 
 	return (
 		<>
-			<div class="text-3xl font-bold underline">THIS IS TAILWIND</div>
+			<div className="text-3xl font-bold underline">THIS IS TAILWIND</div>
 			<div>
 				<a href="https://vitejs.dev" target="_blank">
 					<img src={viteLogo} className="logo" alt="Vite logo" />
@@ -38,4 +38,3 @@ function App() {
 }
 
 export default App;
-

@@ -1,6 +1,7 @@
 # Dev
 .env 
 scratch.txt
+./src/css/output.css
 
 # Logs
 logs
