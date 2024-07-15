@@ -1,13 +1,16 @@
-function WeatherIcon() {
+function WeatherIcon({ image, alt, text }) {
 	return (
 		<>
-			<div>
+			<div className="inline-block h-10">
 				{/* Image */}
-				<div>
-                    <img src="" alt="" srcset="" />
-                </div>
+				<div className="w-full flex justify-center">
+					<img className="invert" src={image} alt={alt} />
+				</div>
+
 				{/* Text */}
-				<div className="text-center text-white">Humidity</div>
+				<div className="text-xs text-white">
+					<p>{text}</p>
+				</div>
 			</div>
 		</>
 	);

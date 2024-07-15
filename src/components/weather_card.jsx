@@ -1,3 +1,7 @@
+// Components
+import WeatherIcon from './weather_icon';
+
+// Images
 import placeHolderImage from '../assets/10d@4x.png';
 import humidityImage from '../assets/humidity.svg';
 import windSpeedImage from '../assets/wind.svg';
@@ -14,7 +18,6 @@ function WeatherCard() {
 							className="w-full h-full object-contain"
 							src={placeHolderImage}
 							alt="PlaceHolder"
-							srcset=""
 						/>
 					</div>
 					{/* Hero Weather */}
@@ -54,47 +57,22 @@ function WeatherCard() {
 				</div>
 				{/* Bottom Row */}
 				<div className="w-full flex h-12 items-center justify-evenly">
-					{/* CARDS */}
+					{/* Icons */}
 					<div className="flex gap-3">
-						{/* Humidity */}
-						<div className="inline-block h-10">
-							{/* Image */}
-							<div className="w-full flex justify-center">
-								<img
-									className="invert"
-									src={humidityImage}
-									alt="Humidity"
-									srcset=""
-								/>
-							</div>
+						<WeatherIcon
+							alt="Humidity"
+							image={humidityImage}
+							text="Humidity"></WeatherIcon>
 
-							{/* Text */}
-							<div className="text-xs text-white">
-								<p>Humidity</p>
-							</div>
-						</div>
-						{/* Wind */}
-						<div className="inline-block h-10">
-							{/* Image */}
-							<div className="w-full flex justify-center">
-								<img
-									className="invert"
-									src={windSpeedImage}
-									alt="Humidity"
-									srcset=""
-								/>
-							</div>
-
-							{/* Text */}
-							<div className="text-xs text-white">
-								<p>Wind Speed</p>
-							</div>
-						</div>
+						<WeatherIcon
+							alt="Wind Speed"
+							image={windSpeedImage}
+							text="Wind Speed"></WeatherIcon>
 					</div>
 					{/* Text */}
 					<div>
 						<p className="text-sm text-center text-white">
-							Thunderstom with Heavy Drizzle
+							Thunderstorm with Heavy Drizzle
 						</p>
 					</div>
 				</div>
