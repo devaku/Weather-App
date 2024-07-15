@@ -6,10 +6,16 @@ import CityName from './components/city_name';
 function App() {
 	return (
 		<>
-			<main class="m-[5px]">
+			<main className="m-[5px]">
 				<SearchBar></SearchBar>
 				<CityName></CityName>
-				<WeatherCard></WeatherCard>
+				<div className="overflow-scroll md:overflow-hidden flex flex-col lg:flex-row justify-evenly gap-4">
+					<WeatherCard></WeatherCard>
+					{/* <WeatherCard></WeatherCard>
+					<WeatherCard></WeatherCard>
+					<WeatherCard></WeatherCard>
+					<WeatherCard></WeatherCard> */}
+				</div>
 			</main>
 		</>
 	);
