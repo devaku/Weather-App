@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import WeatherCard from './components/weather_card';
-import SearchBar from './components/search_bar';
-import CityName from './components/city_name';
+import WeatherCard from './components/WeatherCard';
+import SearchBar from './components/SearchBar';
+import CityName from './components/CityName';
 
 function App() {
 	return (

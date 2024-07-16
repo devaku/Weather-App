@@ -8,7 +8,7 @@ function WeatherIcon({ image, alt, text }) {
 				</div>
 
 				{/* Text */}
-				<div className="text-xs text-white">
+				<div className="text-xs text-white text-center">
 					<p>{text}</p>
 				</div>
 			</div>

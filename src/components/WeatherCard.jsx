@@ -1,5 +1,5 @@
 // Components
-import WeatherIcon from './weather_icon';
+import WeatherIcon from './WeatherIcon';
 
 // Images
 import placeHolderImage from '../assets/10d@4x.png';
@@ -9,11 +9,11 @@ import windSpeedImage from '../assets/wind.svg';
 function WeatherCard() {
 	return (
 		<>
-			<div>
+			<div className="md:h-min md:flex md:flex-col">
 				{/* Top Row */}
-				<div className="w-full flex h-[100px] items-center justify-evenly">
+				<div className="w-full flex h-[100px] md:h-min md:flex-col items-center justify-evenly">
 					{/* Image */}
-					<div className="bg-coa h-full rounded-full my-5">
+					<div className="bg-coa h-full md:h-[100px] rounded-full my-5">
 						<img
 							className="w-full h-full object-contain"
 							src={placeHolderImage}
@@ -21,15 +21,15 @@ function WeatherCard() {
 						/>
 					</div>
 					{/* Hero Weather */}
-					<div className="text-white h-full flex flex-col">
+					<div className="text-white h-full flex flex-col md:items-center">
 						{/* Date */}
-						<div className="h-4">
-							<p className="text-xs">
+						<div className="h-4 md:h-min">
+							<p className="text-xs md:text-lg">
 								Monday, September, DAY, YEAR
 							</p>
 						</div>
 						{/* Temperatures */}
-						<div className="flex-grow flex items-center">
+						<div className="flex-grow flex items-center md:gap-7">
 							{/* Hero Temp */}
 							<div>
 								<div className="w-[90px] h-10 text-2xl text-center">
@@ -56,7 +56,7 @@ function WeatherCard() {
 					</div>
 				</div>
 				{/* Bottom Row */}
-				<div className="w-full flex h-12 items-center justify-evenly">
+				<div className="w-full flex md:flex-col-reverse h-12 md:h-min items-center justify-evenly md:gap-3">
 					{/* Icons */}
 					<div className="flex gap-3">
 						<WeatherIcon
@@ -71,7 +71,7 @@ function WeatherCard() {
 					</div>
 					{/* Text */}
 					<div>
-						<p className="text-sm text-center text-white">
+						<p className="text-sm md:text-base text-center text-white md:mt-3">
 							Thunderstorm with Heavy Drizzle
 						</p>
 					</div>
