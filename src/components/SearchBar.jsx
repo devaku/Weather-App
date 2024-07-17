@@ -1,7 +1,8 @@
 import magnifyingGlass from '../assets/magnifying_glass.svg';
+import svgBurger from '../assets/burger.svg';
 import { fetchWeather } from '../js/weather_api';
 
-function SearchBar({ setJsonResponse }) {
+function SearchBar({ setJsonResponse, setDisplaySidebar }) {
 	async function handleSubmit(e) {
 		e.stopPropagation();
 
@@ -19,30 +20,45 @@ function SearchBar({ setJsonResponse }) {
 			setJsonResponse(jsonResponse);
 		}
 	}
+
+	function handleClick(e) {
+		e.stopPropagation();
+		setDisplaySidebar(true);
+	}
 	return (
 		<>
-			{/* Textbox */}
-			<div className="m-2.5 sm:w-full md:mx-auto md:w-4/12 bg-white flex rounded-md">
-				<div className="ml-2.5 my-[15px] w-full grow">
-					<input
-						className="w-full h-full"
-						type="text"
-						placeholder="Enter City Name, and Country"
-						name=""
-						maxLength={100}
-						onKeyDown={handleKeyDown}
-						id=""
-					/>
-				</div>
-
-				{/* Image */}
-				<div className="ml-1 flex items-center bg-secondary rounded-r-md">
+			<div className="flex items-center sm:w-full md:mx-auto md:w-4/12">
+				{/* Burger */}
+				<div onClick={handleClick}>
 					<img
 						className="w-[50px] invert"
-						src={magnifyingGlass}
-						alt="Search"
-						onClick={handleSubmit}
+						src={svgBurger}
+						alt="Burger Menu"
 					/>
+				</div>
+				<div className="m-2.5 w-full bg-white flex rounded-md">
+					{/* Textbox */}
+					<div className="ml-2.5 my-[15px] w-full grow">
+						<input
+							className="w-full h-full"
+							type="text"
+							placeholder="Enter City Name, and Country"
+							name=""
+							maxLength={100}
+							onKeyDown={handleKeyDown}
+							id=""
+						/>
+					</div>
+
+					{/* Image */}
+					<div className="ml-1 flex items-center bg-secondary rounded-r-md">
+						<img
+							className="w-[50px] invert"
+							src={magnifyingGlass}
+							alt="Search"
+							onClick={handleSubmit}
+						/>
+					</div>
 				</div>
 			</div>
 		</>

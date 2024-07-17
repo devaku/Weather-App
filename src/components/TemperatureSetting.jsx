@@ -1,10 +1,10 @@
 import { useState } from 'react';
-function SearchSetting({ setSearchSetting }) {
-	const [setting, setSetting] = useState('current');
+function TemperatureSetting({ setTemperatureSetting }) {
+	const [setting, setSetting] = useState('c');
 
 	function handleCheckedChange(e) {
 		setSetting(e.currentTarget.value);
-		setSearchSetting(e.currentTarget.value);
+		setTemperatureSetting(e.currentTarget.value);
 	}
 
 	return (
@@ -14,29 +14,28 @@ function SearchSetting({ setSearchSetting }) {
 					<input
 						className="mr-2"
 						type="radio"
-						name="search"
+						name="temperature"
 						id=""
-						radioGroup="search"
-						value="current"
-						checked={setting == 'current'}
+						value="c"
+						checked={setting == 'c'}
 						onChange={handleCheckedChange}
 					/>
 					<label className="inline-block w-32" htmlFor="current">
-						Current Weather
+						Celsius
 					</label>
 				</div>
 				<div>
 					<input
 						className="mr-2"
 						type="radio"
-						name="search"
-						value="forecast"
+						name="temperature"
+						value="f"
 						id=""
-						checked={setting == 'forecast'}
+						checked={setting == 'f'}
 						onChange={handleCheckedChange}
 					/>
 					<label className="inline-block w-32" htmlFor="forecast">
-						5 Day Forecast
+						Farenheit
 					</label>
 				</div>
 			</div>
@@ -44,4 +43,4 @@ function SearchSetting({ setSearchSetting }) {
 	);
 }
 
-export default SearchSetting;
+export default TemperatureSetting;
