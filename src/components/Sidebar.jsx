@@ -1,23 +1,30 @@
-import { useState } from 'react';
 import SearchSetting from './SearchSetting';
 import TemperatureSetting from './TemperatureSetting';
 import svgCross from '../assets/cross.svg';
 
 function Sidebar({ displaySidebar, setDisplaySidebar }) {
-	let [hideSidebar, setHideSidebar] = useState(true);
 	function handleOnClick(e) {
 		setDisplaySidebar(false);
 		e.stopPropagation();
 	}
 
+	// function handleAnimationEnd(e) {
+	// 	if (e.animationName == 'slide-in') {
+	// 		setDisplaySidebar(false);
+	// 	} else {
+	// 		setDisplaySidebar(true);
+	// 	}
+	// }
+
 	return (
 		<>
 			<div
+				// onAnimationEnd={handleAnimationEnd}
 				className={
-					' absolute bottom-2 w-full h-full bg-gradient-to-b from-black ' +
-					(displaySidebar ? 'slide-in' : 'slide-out hidden')
+					'absolute w-full bottom-2 h-full bg-gradient-to-b from-black ' +
+					(displaySidebar ? 'slide-in ' : 'slide-out')
 				}>
-				<div className="">
+				<div className="py-5 w-5/12 mx-auto">
 					{/* Setting Titlebar */}
 					<div className="flex items-center">
 						{/* Burger Close */}

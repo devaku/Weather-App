@@ -2,7 +2,7 @@
 import WeatherIcon from './WeatherIcon';
 
 // Images
-import placeHolderImage from '../assets/10d@4x.png';
+import placeHolderImage from '../assets/icon.png';
 import humidityImage from '../assets/humidity.svg';
 import windSpeedImage from '../assets/wind.svg';
 
