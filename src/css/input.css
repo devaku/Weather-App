@@ -30,20 +30,52 @@
 
 @keyframes slidein {
 	from {
-		bottom: 100%;
+		bottom: initial;
 	}
 
 	to {
-		bottom: 0;
+		bottom: 2;
 	}
 }
 
 @keyframes slideout {
 	from {
-		bottom: 0;
+		bottom: 2;
 	}
 
 	to {
-		bottom: 100%;
+		bottom: 112px;
+	}
+}
+
+.test-slide-in {
+	animation-duration: 0.3s;
+	animation-timing-function: ease-in-out;
+	animation-name: test-slide-in;
+}
+.test-slide-out {
+	animation-duration: 0.3s;
+	animation-timing-function: ease-in-out;
+	animation-name: test-slide-out;
+	animation-fill-mode: forwards;
+}
+
+@keyframes test-slide-in {
+	from {
+		left: -128px;
+	}
+
+	to {
+		left: 0;
+	}
+}
+
+@keyframes test-slide-out {
+	from {
+		left: 0;
+	}
+
+	to {
+		left: -128px;
 	}
 }
