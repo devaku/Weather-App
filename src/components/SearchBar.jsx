@@ -1,15 +1,22 @@
 import magnifyingGlass from '../assets/magnifying_glass.svg';
-import { FetchWeather } from '../js/weather_api';
+import { fetchWeather } from '../js/weather_api';
 
-function SearchBar() {
-	function handleSubmit(e) {
-		console.log(e);
+function SearchBar({ setJsonResponse }) {
+	async function handleSubmit(e) {
 		e.stopPropagation();
+
+		// TODO add handling if null is the response
+		let jsonResponse = await fetchWeather('Manila');
+		setJsonResponse(jsonResponse);
 	}
 
-	function handleKeyDown(e) {
+	async function handleKeyDown(e) {
+		e.stopPropagation();
+
 		if (e.key == 'Enter') {
-			console.log('Enter');
+			// TODO add handling if null is the response
+			let jsonResponse = fetchWeather('Manila');
+			setJsonResponse(jsonResponse);
 		}
 	}
 	return (
@@ -20,7 +27,7 @@ function SearchBar() {
 					<input
 						className="w-full h-full"
 						type="text"
-						placeholder="Enter City Name"
+						placeholder="Enter City Name, and Country"
 						name=""
 						maxLength={100}
 						onKeyDown={handleKeyDown}

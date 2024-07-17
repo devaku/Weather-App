@@ -2,6 +2,7 @@
 .env 
 scratch.txt
 /src/css/output.css
+/src/components/Scratch.jsx
 
 # Logs
 logs
