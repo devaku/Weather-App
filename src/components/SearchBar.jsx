@@ -17,7 +17,7 @@ function SearchBar({ setJsonResponse, setDisplaySidebar }) {
 
 		if (e.key == 'Enter') {
 			// TODO add handling if null is the response
-			let jsonResponse = fetchWeather('Manila');
+			let jsonResponse = await fetchWeather('Manila');
 			setJsonResponse(jsonResponse);
 		}
 	}
