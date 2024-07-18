@@ -14,9 +14,23 @@
 	user-select: none;
 }
 
+/* Transitions */
+
+.side-bar {
+	transition: bottom 0.5s ease-in-out;
+}
+
+.slide-in-from-top {
+	bottom: 0;
+}
+
+.slide-out-to-top {
+	bottom: 100vh;
+}
+
 /* Animations */
 
-.slide-in {
+/* .slide-in {
 	animation-duration: 0.5s;
 	animation-timing-function: ease-in-out;
 	animation-name: slidein;
@@ -80,4 +94,4 @@
 	to {
 		left: -128px;
 	}
-}
+} */
