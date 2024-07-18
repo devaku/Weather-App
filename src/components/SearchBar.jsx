@@ -1,5 +1,6 @@
-import magnifyingGlass from '../assets/magnifying_glass.svg';
-import svgBurger from '../assets/burger.svg';
+// import magnifyingGlass from '../assets/magnifying_glass.svg';
+import SvgMagnifyingGlass from './svgs/SvgMagnifyingGlass';
+import SvgBurger from './svgs/SvgBurger';
 import { fetchWeather } from '../js/weather_api';
 
 function SearchBar({ setJsonResponse, setDisplaySidebar }) {
@@ -30,11 +31,14 @@ function SearchBar({ setJsonResponse, setDisplaySidebar }) {
 			<div className="flex items-center sm:w-full md:mx-auto md:w-4/12">
 				{/* Burger */}
 				<div onClick={handleClick}>
-					<img
-						className="w-[50px] invert"
-						src={svgBurger}
+					<div className="w-[50px]">
+						<SvgBurger twColor="fill-white"></SvgBurger>
+					</div>
+					{/* <img
+						className="w-[50px]"
+						src={svgBurger({ twColor: 'fill-white' })}
 						alt="Burger Menu"
-					/>
+					/> */}
 				</div>
 				<div className="m-2.5 w-full bg-white flex rounded-md">
 					{/* Textbox */}
@@ -52,12 +56,16 @@ function SearchBar({ setJsonResponse, setDisplaySidebar }) {
 
 					{/* Image */}
 					<div className="ml-1 flex items-center bg-secondary rounded-r-md">
-						<img
+						<div className="w-[50px]" onClick={handleSubmit}>
+							<SvgMagnifyingGlass twColor="fill-white"></SvgMagnifyingGlass>
+						</div>
+
+						{/* <img
 							className="w-[50px] invert"
 							src={magnifyingGlass}
 							alt="Search"
 							onClick={handleSubmit}
-						/>
+						/> */}
 					</div>
 				</div>
 			</div>

@@ -13,7 +13,7 @@ function Sidebar({ displaySidebar, setDisplaySidebar }) {
 			<div
 				// onAnimationEnd={handleAnimationEnd}
 				className={
-					'absolute w-full bottom-2 h-full bg-gradient-to-b from-black from-30% via-black via-10% to-transparent side-bar ' +
+					'absolute w-full bottom-2 h-full bg-gradient-to-b from-black from-30% via-black via-10%  side-bar ' +
 					(displaySidebar ? 'slide-in-from-top ' : 'slide-out-to-top')
 				}>
 				<div className="py-5 w-full md:w-5/12 mx-auto">
