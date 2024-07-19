@@ -5,15 +5,20 @@ import CityName from './components/CityName';
 import Sidebar from './components/Sidebar';
 
 function App() {
-	let [searchSetting, setSearchSetting] = useState('current');
-	let [jsonResponse, setJsonResponse] = useState('');
+	let [searchSetting, setSearchSetting] = useState({
+		weatherSetting: 'current',
+		units: 'metric',
+	});
+	let [jsonResponse, setJsonResponse] = useState(null);
 	let [displaySidebar, setDisplaySidebar] = useState(false);
 
 	return (
 		<>
 			<Sidebar
 				displaySidebar={displaySidebar}
-				setDisplaySidebar={setDisplaySidebar}></Sidebar>
+				setDisplaySidebar={setDisplaySidebar}
+				searchSetting={searchSetting}
+				setSearchSetting={setSearchSetting}></Sidebar>
 			<main className="m-[5px]">
 				<SearchBar
 					setJsonResponse={setJsonResponse}

@@ -1,14 +1,14 @@
 // import magnifyingGlass from '../assets/magnifying_glass.svg';
 import SvgMagnifyingGlass from './svgs/SvgMagnifyingGlass';
 import SvgBurger from './svgs/SvgBurger';
-import { fetchWeather } from '../js/weather_api';
+import { FetchWeather } from '../js/weather_api';
 
 function SearchBar({ setJsonResponse, setDisplaySidebar }) {
 	async function handleSubmit(e) {
 		e.stopPropagation();
-
+		let [cityName, country = ''] = e.target.value.split(',');
 		// TODO add handling if null is the response
-		let jsonResponse = await fetchWeather('Manila');
+		let jsonResponse = await FetchWeather(cityName, country);
 		setJsonResponse(jsonResponse);
 	}
 
@@ -16,8 +16,12 @@ function SearchBar({ setJsonResponse, setDisplaySidebar }) {
 		e.stopPropagation();
 
 		if (e.key == 'Enter') {
+			let [cityName, country = ''] = e.target.value.split(',');
 			// TODO add handling if null is the response
-			let jsonResponse = await fetchWeather('Manila');
+			let jsonResponse = await FetchWeather(
+				cityName.trim(),
+				country.trim()
+			);
 			setJsonResponse(jsonResponse);
 		}
 	}

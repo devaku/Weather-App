@@ -2,7 +2,12 @@ import SearchSetting from './SearchSetting';
 import TemperatureSetting from './TemperatureSetting';
 import SvgCross from './svgs/SvgCross';
 
-function Sidebar({ displaySidebar, setDisplaySidebar }) {
+function Sidebar({
+	displaySidebar,
+	setDisplaySidebar,
+	searchSetting,
+	setSearchSetting,
+}) {
 	function handleOnClick(e) {
 		setDisplaySidebar(false);
 		e.stopPropagation();
@@ -13,7 +18,7 @@ function Sidebar({ displaySidebar, setDisplaySidebar }) {
 			<div
 				// onAnimationEnd={handleAnimationEnd}
 				className={
-					'absolute w-full bottom-2 h-full bg-gradient-to-b from-black from-30% via-black via-10%  side-bar ' +
+					'absolute z-10 w-full bottom-2 h-full bg-gradient-to-b from-black from-30% via-black via-10%  side-bar ' +
 					(displaySidebar ? 'slide-in-from-top ' : 'slide-out-to-top')
 				}>
 				<div className="py-5 w-full md:w-5/12 mx-auto">
@@ -35,8 +40,14 @@ function Sidebar({ displaySidebar, setDisplaySidebar }) {
 						{/* Text */}
 						<div className="text-white text-lg">Settings</div>
 					</div>
-					<SearchSetting></SearchSetting>
-					<TemperatureSetting></TemperatureSetting>
+					<SearchSetting
+						searchSetting={searchSetting}
+						setSearchSetting={setSearchSetting}></SearchSetting>
+					<TemperatureSetting
+						searchSetting={searchSetting}
+						setSearchSetting={
+							setSearchSetting
+						}></TemperatureSetting>
 				</div>
 			</div>
 		</>

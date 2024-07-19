@@ -1,10 +1,13 @@
 import { useState } from 'react';
-function SearchSetting({ setSearchSetting }) {
-	const [setting, setSetting] = useState('current');
+function SearchSetting({ searchSetting, setSearchSetting }) {
+	const [setting, setSetting] = useState(searchSetting.weatherSetting);
 
 	function handleCheckedChange(e) {
 		setSetting(e.currentTarget.value);
-		setSearchSetting(e.currentTarget.value);
+
+		let temp = searchSetting;
+		temp.weatherSetting = e.currentTarget.value;
+		setSearchSetting(temp);
 	}
 
 	return (
