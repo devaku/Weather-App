@@ -6,6 +6,9 @@ import placeHolderImage from '../assets/icon.png';
 import humidityImage from '../assets/humidity.svg';
 import windSpeedImage from '../assets/wind.svg';
 
+import svgHumidity from './svgs/SvgHumidity';
+import svgWind from './svgs/SvgWind';
+
 function WeatherCard() {
 	return (
 		<>
@@ -22,11 +25,9 @@ function WeatherCard() {
 					</div>
 					{/* Hero Weather */}
 					<div className="text-white h-full flex flex-col md:items-center">
-						{/* Date */}
+						{/* TIME */}
 						<div className="h-4 md:h-min">
-							<p className="text-xs md:text-lg">
-								Monday, September, DAY, YEAR
-							</p>
+							<p className="text-xs md:text-lg">00:00</p>
 						</div>
 						{/* Temperatures */}
 						<div className="flex-grow flex items-center md:gap-7">
@@ -60,14 +61,12 @@ function WeatherCard() {
 					{/* Icons */}
 					<div className="flex gap-3">
 						<WeatherIcon
-							alt="Humidity"
-							image={humidityImage}
-							text="Humidity"></WeatherIcon>
+							svg={svgHumidity({ twColor: 'fill-white' })}
+							text="100%"></WeatherIcon>
 
 						<WeatherIcon
-							alt="Wind Speed"
-							image={windSpeedImage}
-							text="Wind Speed"></WeatherIcon>
+							svg={svgWind({ twColor: 'fill-white' })}
+							text="100km/h"></WeatherIcon>
 					</div>
 					{/* Text */}
 					<div>

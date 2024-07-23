@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import './transitions.css';
 
 .hidden {
 	display: none;
@@ -28,70 +29,18 @@
 	bottom: 100vh;
 }
 
-/* Animations */
-
-/* .slide-in {
-	animation-duration: 0.5s;
-	animation-timing-function: ease-in-out;
-	animation-name: slidein;
-	animation-fill-mode: forwards;
+.transition-fade-in {
+	transition: opacity 1s ease-in-out, transform 1s ease-in-out;
 }
 
-.slide-out {
-	animation-duration: 0.5s;
-	animation-timing-function: ease-in-out;
-	animation-name: slideout;
-	animation-fill-mode: forwards;
+.transition-fade-in-from-left-start {
+	transform: translateX(12rem);
+	z-index: auto;
+	opacity: 0%;
 }
 
-@keyframes slidein {
-	from {
-		bottom: 100vh;
-	}
-
-	to {
-		bottom: 0;
-	}
+.transition-fade-in-from-left-end {
+	transform: translateX(0);
+	z-index: auto;
+	opacity: 100%;
 }
-
-@keyframes slideout {
-	from {
-		bottom: 0;
-	}
-
-	to {
-		bottom: 100vh;
-	}
-}
-
-.test-slide-in {
-	animation-duration: 0.3s;
-	animation-timing-function: ease-in-out;
-	animation-name: test-slide-in;
-}
-.test-slide-out {
-	animation-duration: 0.3s;
-	animation-timing-function: ease-in-out;
-	animation-name: test-slide-out;
-	animation-fill-mode: forwards;
-}
-
-@keyframes test-slide-in {
-	from {
-		left: -128px;
-	}
-
-	to {
-		left: 0;
-	}
-}
-
-@keyframes test-slide-out {
-	from {
-		left: 0;
-	}
-
-	to {
-		left: -128px;
-	}
-} */

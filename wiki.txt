@@ -3,6 +3,7 @@ npm create vite@latest
 
 TAILWIND:
 https://tailwindcss.com/docs/installation
+https://tailwindcss.com/docs/using-with-preprocessors
 
 
 https://openweathermap.org/forecast5

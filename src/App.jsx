@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import WeatherCard from './components/WeatherCard';
+import WeatherDrawer from './components/WeatherDrawer';
 import SearchBar from './components/SearchBar';
 import CityName from './components/CityName';
 import Sidebar from './components/Sidebar';
@@ -11,6 +11,7 @@ function App() {
 	});
 	let [jsonResponse, setJsonResponse] = useState(null);
 	let [displaySidebar, setDisplaySidebar] = useState(false);
+	let [displayCityDetails, setDisplayCityDetails] = useState(false);
 
 	return (
 		<>
@@ -22,15 +23,13 @@ function App() {
 			<main className="m-[5px]">
 				<SearchBar
 					setJsonResponse={setJsonResponse}
-					setDisplaySidebar={setDisplaySidebar}></SearchBar>
-				<CityName jsonResponse={jsonResponse}></CityName>
-				<div className="overflow-scroll md:overflow-hidden flex flex-col lg:flex-row justify-evenly gap-4">
-					<WeatherCard jsonResponse={jsonResponse}></WeatherCard>
-					{/* <WeatherCard></WeatherCard>
-					<WeatherCard></WeatherCard>
-					<WeatherCard></WeatherCard>
-					<WeatherCard></WeatherCard> */}
-				</div>
+					setDisplaySidebar={setDisplaySidebar}
+					searchSetting={searchSetting}></SearchBar>
+				<CityName
+					jsonResponse={jsonResponse}
+					displayCityDetails={displayCityDetails}
+					setDisplayCityDetails={setDisplayCityDetails}></CityName>
+				<WeatherDrawer jsonResponse={jsonResponse}></WeatherDrawer>
 			</main>
 		</>
 	);

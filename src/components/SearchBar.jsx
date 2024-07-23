@@ -1,29 +1,56 @@
 // import magnifyingGlass from '../assets/magnifying_glass.svg';
 import SvgMagnifyingGlass from './svgs/SvgMagnifyingGlass';
 import SvgBurger from './svgs/SvgBurger';
-import { FetchWeather } from '../js/weather_api';
+import { FetchWeather, FetchFiveDayForecast } from '../js/weather_api';
 
-function SearchBar({ setJsonResponse, setDisplaySidebar }) {
+function SearchBar({ setJsonResponse, setDisplaySidebar, searchSetting }) {
+	function resetPage() {
+		setJsonResponse({});
+	}
 	async function handleSubmit(e) {
 		e.stopPropagation();
+		resetPage();
 		let [cityName, country = ''] = e.target.value.split(',');
 		// TODO add handling if null is the response
-		let jsonResponse = await FetchWeather(cityName, country);
+		let jsonResponse = await fetchData(cityName, country, searchSetting);
 		setJsonResponse(jsonResponse);
 	}
 
 	async function handleKeyDown(e) {
 		e.stopPropagation();
-
 		if (e.key == 'Enter') {
+			resetPage();
 			let [cityName, country = ''] = e.target.value.split(',');
+
+			cityName = cityName.trim();
+			country = country.trim();
 			// TODO add handling if null is the response
-			let jsonResponse = await FetchWeather(
-				cityName.trim(),
-				country.trim()
+			let jsonResponse = await fetchData(
+				cityName,
+				country,
+				searchSetting
 			);
 			setJsonResponse(jsonResponse);
 		}
+	}
+
+	async function fetchData(cityName, country, searchSetting) {
+		let jsonResponse;
+		if (searchSetting.weatherSetting == 'forecast') {
+			jsonResponse = await FetchFiveDayForecast(
+				cityName,
+				country,
+				searchSetting.units
+			);
+		} else {
+			jsonResponse = await FetchWeather(
+				cityName.trim(),
+				country.trim(),
+				searchSetting.units
+			);
+		}
+
+		return jsonResponse;
 	}
 
 	function handleClick(e) {
