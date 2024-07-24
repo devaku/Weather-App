@@ -3,33 +3,51 @@ import SvgMagnifyingGlass from './svgs/SvgMagnifyingGlass';
 import SvgBurger from './svgs/SvgBurger';
 import { FetchWeather, FetchFiveDayForecast } from '../js/weather_api';
 
-function SearchBar({ setJsonResponse, setDisplaySidebar, searchSetting }) {
-	function resetPage() {
-		setJsonResponse({});
+function SearchBar({
+	setJsonResponse,
+	setIsCityCardActive,
+	setDisplaySidebar,
+	searchSetting,
+}) {
+	function displayPage() {
+		return new Promise((resolve) => {
+			setTimeout(() => {
+				setIsCityCardActive(true);
+				resolve();
+			}, 1000);
+		});
 	}
+
 	async function handleSubmit(e) {
 		e.stopPropagation();
-		resetPage();
+		setIsCityCardActive(false);
 		let [cityName, country = ''] = e.target.value.split(',');
 		// TODO add handling if null is the response
-		let jsonResponse = await fetchData(cityName, country, searchSetting);
+
+		let promiseAll = await Promise.all([
+			fetchData(cityName, country, searchSetting),
+			displayPage(),
+		]);
+		let jsonResponse = promiseAll[0];
 		setJsonResponse(jsonResponse);
 	}
 
 	async function handleKeyDown(e) {
 		e.stopPropagation();
 		if (e.key == 'Enter') {
-			resetPage();
+			setIsCityCardActive(false);
 			let [cityName, country = ''] = e.target.value.split(',');
 
 			cityName = cityName.trim();
 			country = country.trim();
 			// TODO add handling if null is the response
-			let jsonResponse = await fetchData(
-				cityName,
-				country,
-				searchSetting
-			);
+
+			let promiseAll = await Promise.all([
+				fetchData(cityName, country, searchSetting),
+				displayPage(),
+			]);
+
+			let jsonResponse = promiseAll[0];
 			setJsonResponse(jsonResponse);
 		}
 	}

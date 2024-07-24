@@ -1,24 +1,18 @@
 function CityName(props) {
-	if (!props.jsonResponse) {
-		return <></>;
+	const { isCityCardActive, jsonResponse } = props;
+	let cityName, country;
+	if (jsonResponse) {
+		cityName = jsonResponse.weatherArray[0].cityName;
+		country = jsonResponse.weatherArray[0].country;
 	}
-
-	const { setDisplayCityDetails, displayCityDetails } = props;
-	const { cityName, country } = props.jsonResponse;
-
-	setTimeout(() => {
-		setDisplayCityDetails(true);
-	}, 200);
 
 	return (
 		<>
 			<div className="mb-2.5 w-full flex justify-center">
 				<div
 					className={
-						'text-center w-max text-white text-2xl md:text-4xl md:mt-3 transition-fade-in ' +
-						(displayCityDetails
-							? 'transition-fade-in-from-left-end '
-							: 'transition-fade-in-from-left-start ')
+						'text-center w-max text-white text-2xl md:text-4xl md:mt-3 city-card ' +
+						(isCityCardActive ? 'city-card-active' : '')
 					}>
 					<div>
 						{cityName}, {country}

@@ -9,9 +9,9 @@ function App() {
 		weatherSetting: 'current',
 		units: 'metric',
 	});
+	let [isCityCardActive, setIsCityCardActive] = useState(false);
 	let [jsonResponse, setJsonResponse] = useState(null);
 	let [displaySidebar, setDisplaySidebar] = useState(false);
-	let [displayCityDetails, setDisplayCityDetails] = useState(false);
 
 	return (
 		<>
@@ -23,12 +23,13 @@ function App() {
 			<main className="m-[5px]">
 				<SearchBar
 					setJsonResponse={setJsonResponse}
+					jsonResponse={jsonResponse}
 					setDisplaySidebar={setDisplaySidebar}
+					setIsCityCardActive={setIsCityCardActive}
 					searchSetting={searchSetting}></SearchBar>
 				<CityName
 					jsonResponse={jsonResponse}
-					displayCityDetails={displayCityDetails}
-					setDisplayCityDetails={setDisplayCityDetails}></CityName>
+					isCityCardActive={isCityCardActive}></CityName>
 				<WeatherDrawer jsonResponse={jsonResponse}></WeatherDrawer>
 			</main>
 		</>
