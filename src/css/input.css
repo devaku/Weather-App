@@ -29,6 +29,17 @@
 	bottom: 100vh;
 }
 
+.weather-card {
+	transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+	transform: translateY(12rem);
+	opacity: 0;
+}
+
+.weather-card-active {
+	transform: translateY(0);
+	opacity: 1;
+}
+
 .city-card {
 	transition: opacity 1s ease-in-out, transform 1s ease-in-out;
 	transform: translateX(12rem);

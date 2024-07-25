@@ -3,16 +3,17 @@ import WeatherIcon from './WeatherIcon';
 
 // Images
 import placeHolderImage from '../assets/icon.png';
-import humidityImage from '../assets/humidity.svg';
-import windSpeedImage from '../assets/wind.svg';
-
 import svgHumidity from './svgs/SvgHumidity';
 import svgWind from './svgs/SvgWind';
 
-function WeatherCard() {
+function WeatherCard({ jsonResponse, isWeatherCardActive }) {
 	return (
 		<>
-			<div className="md:h-min md:flex md:flex-col">
+			<div
+				className={
+					'md:h-min md:flex md:flex-col weather-card ' +
+					(isWeatherCardActive ? 'weather-card-active' : '')
+				}>
 				{/* Top Row */}
 				<div className="w-full flex h-[100px] md:h-min md:flex-col items-center justify-evenly">
 					{/* Image */}

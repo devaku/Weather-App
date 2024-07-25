@@ -6,6 +6,7 @@ import { FetchWeather, FetchFiveDayForecast } from '../js/weather_api';
 function SearchBar({
 	setJsonResponse,
 	setIsCityCardActive,
+	setIsWeatherCardActive,
 	setDisplaySidebar,
 	searchSetting,
 }) {
@@ -13,6 +14,7 @@ function SearchBar({
 		return new Promise((resolve) => {
 			setTimeout(() => {
 				setIsCityCardActive(true);
+				setIsWeatherCardActive(true);
 				resolve();
 			}, 1000);
 		});
@@ -21,6 +23,7 @@ function SearchBar({
 	async function handleSubmit(e) {
 		e.stopPropagation();
 		setIsCityCardActive(false);
+		setIsWeatherCardActive(false);
 		let [cityName, country = ''] = e.target.value.split(',');
 		// TODO add handling if null is the response
 
@@ -36,6 +39,7 @@ function SearchBar({
 		e.stopPropagation();
 		if (e.key == 'Enter') {
 			setIsCityCardActive(false);
+			setIsWeatherCardActive(false);
 			let [cityName, country = ''] = e.target.value.split(',');
 
 			cityName = cityName.trim();

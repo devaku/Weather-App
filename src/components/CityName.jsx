@@ -2,7 +2,9 @@ function CityName(props) {
 	const { isCityCardActive, jsonResponse } = props;
 	let cityName, country;
 	if (jsonResponse) {
-		cityName = jsonResponse.weatherArray[0].cityName;
+		cityName = jsonResponse.weatherArray[0].cityName
+			? jsonResponse.weatherArray[0].cityName
+			: '';
 		country = jsonResponse.weatherArray[0].country;
 	}
 

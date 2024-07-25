@@ -9,9 +9,15 @@ function App() {
 		weatherSetting: 'current',
 		units: 'metric',
 	});
-	let [isCityCardActive, setIsCityCardActive] = useState(false);
-	let [jsonResponse, setJsonResponse] = useState(null);
+
+	let [jsonResponse, setJsonResponse] = useState({
+		weatherArray: [{}],
+	});
 	let [displaySidebar, setDisplaySidebar] = useState(false);
+
+	// UI Flags
+	let [isCityCardActive, setIsCityCardActive] = useState(false);
+	let [isWeatherCardActive, setIsWeatherCardActive] = useState(false);
 
 	return (
 		<>
@@ -26,11 +32,14 @@ function App() {
 					jsonResponse={jsonResponse}
 					setDisplaySidebar={setDisplaySidebar}
 					setIsCityCardActive={setIsCityCardActive}
+					setIsWeatherCardActive={setIsWeatherCardActive}
 					searchSetting={searchSetting}></SearchBar>
 				<CityName
 					jsonResponse={jsonResponse}
 					isCityCardActive={isCityCardActive}></CityName>
-				<WeatherDrawer jsonResponse={jsonResponse}></WeatherDrawer>
+				<WeatherDrawer
+					jsonResponse={jsonResponse}
+					isWeatherCardActive={isWeatherCardActive}></WeatherDrawer>
 			</main>
 		</>
 	);
