@@ -56,6 +56,12 @@ export async function FetchFiveDayForecast(cityName, country, units) {
 function PrepareWeatherJson(jsonResponse) {
 	let finalJson = PrepareJson(jsonResponse);
 
+	finalJson.cityName = jsonResponse.name;
+
+	// Convert back to full word
+	let fullCountry = lookup.byInternet(jsonResponse.sys.country);
+	finalJson.country = fullCountry.country;
+
 	// Convert time
 	let timezone = jsonResponse.timezone;
 	let sunrise = new Date((jsonResponse.sys.sunrise + timezone) * 1000);
@@ -73,7 +79,7 @@ function PrepareForecastJson(jsonResponse) {
 		const currentWeather = jsonResponse.list[x];
 
 		let finalJson = PrepareJson(currentWeather);
-        
+
 		finalJson.cityName = jsonResponse.city.name;
 
 		// Convert back to full word
@@ -131,12 +137,6 @@ function PrepareJson(jsonResponse) {
 
 	// In percentage
 	finalJson.humidity = jsonResponse.main.humidity;
-
-	finalJson.cityName = jsonResponse.name;
-
-	// Convert back to full word
-	let fullCountry = lookup.byInternet(jsonResponse.sys.country);
-	finalJson.country = fullCountry.country;
 
 	/**
      *  Weather icon
