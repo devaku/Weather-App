@@ -6,20 +6,15 @@ function WeatherDrawer({ jsonResponse, isWeatherCardActive }) {
 	let { weatherArray } = jsonResponse;
 	let weatherCards = () => {
 		return weatherArray.map((el) => {
-			return (
-				<WeatherCard
-					key={item++}
-					jsonResponse={el}
-					isWeatherCardActive={isWeatherCardActive}></WeatherCard>
-			);
+			return <WeatherCard key={item++} jsonResponse={el}></WeatherCard>;
 		});
 	};
 
 	let css = '';
 	if (weatherArray.length > 1) {
-		css = 'lg:grid lg:grid-cols-4';
+		css = 'lg:grid lg:grid-cols-4 ';
 	} else {
-		css = 'lg:flex-row';
+		css = 'lg:flex-row ';
 	}
 	return (
 		<>
@@ -27,7 +22,9 @@ function WeatherDrawer({ jsonResponse, isWeatherCardActive }) {
 				<div
 					className={
 						'overflow-scroll md:overflow-hidden flex flex-col justify-evenly gap-4 ' +
-						css
+						css +
+						' weather-card ' +
+						(isWeatherCardActive ? 'weather-card-active' : '')
 					}>
 					{weatherCards()}
 				</div>

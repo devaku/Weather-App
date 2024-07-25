@@ -2,25 +2,34 @@
 import WeatherIcon from './WeatherIcon';
 
 // Images
-import placeHolderImage from '../assets/icon.png';
 import svgHumidity from './svgs/SvgHumidity';
 import svgWind from './svgs/SvgWind';
 
-function WeatherCard({ jsonResponse, isWeatherCardActive }) {
+function WeatherCard({ jsonResponse }) {
+	let weatherIconBaseUrl = '';
+	if (jsonResponse.weatherIcon) {
+		weatherIconBaseUrl = `https://openweathermap.org/img/wn/${jsonResponse.weatherIcon}@4x.png`;
+	}
+
+	let temperatureUnit = 'C';
+	let windSpeedUnit = 'meters/second';
+	if (jsonResponse.unit == 'metric') {
+		windSpeedUnit = 'meters/second';
+		temperatureUnit = 'C';
+	} else {
+		windSpeedUnit = 'miles/hour';
+		temperatureUnit = 'F';
+	}
 	return (
 		<>
-			<div
-				className={
-					'md:h-min md:flex md:flex-col weather-card ' +
-					(isWeatherCardActive ? 'weather-card-active' : '')
-				}>
+			<div className={'md:h-min md:flex md:flex-col'}>
 				{/* Top Row */}
 				<div className="w-full flex h-[100px] md:h-min md:flex-col items-center justify-evenly">
 					{/* Image */}
 					<div className="bg-coa h-full md:h-[100px] rounded-full my-5">
 						<img
 							className="w-full h-full object-contain"
-							src={placeHolderImage}
+							src={weatherIconBaseUrl}
 							alt="PlaceHolder"
 						/>
 					</div>
@@ -33,14 +42,16 @@ function WeatherCard({ jsonResponse, isWeatherCardActive }) {
 						{/* Temperatures */}
 						<div className="flex-grow flex items-center md:gap-7">
 							{/* Hero Temp */}
-							<div>
+							<div className="mr-2">
 								<div className="w-[90px] h-10 text-2xl text-center">
-									<span>20</span>°<span>C</span>
+									<span>{jsonResponse.temperature}</span>°
+									<span>{temperatureUnit}</span>
 								</div>
 								<div className="text-xs">
 									<p>
-										Feels Like: <span>20</span>°
-										<span>C</span>
+										Feels Like:{' '}
+										<span>{jsonResponse.feelsLike}</span>°
+										<span>{temperatureUnit}</span>
 									</p>
 								</div>
 							</div>
@@ -48,10 +59,14 @@ function WeatherCard({ jsonResponse, isWeatherCardActive }) {
 							<div className="text-xs flex-grow">
 								<div className="text-2xl">Sunny</div>
 								<div className="">
-									Highs: <span>20</span>°<span>C</span>
+									Highs:{' '}
+									<span>{jsonResponse.temperatureMax}</span>°
+									<span>{temperatureUnit}</span>
 								</div>
 								<div className="">
-									Lows: <span>20</span>°<span>C</span>
+									Lows:{' '}
+									<span>{jsonResponse.temperatureMin}</span>°
+									<span>{temperatureUnit}</span>
 								</div>
 							</div>
 						</div>
@@ -63,16 +78,18 @@ function WeatherCard({ jsonResponse, isWeatherCardActive }) {
 					<div className="flex gap-3">
 						<WeatherIcon
 							svg={svgHumidity({ twColor: 'fill-white' })}
-							text="100%"></WeatherIcon>
+							text={jsonResponse.humidity + '%'}></WeatherIcon>
 
 						<WeatherIcon
 							svg={svgWind({ twColor: 'fill-white' })}
-							text="100km/h"></WeatherIcon>
+							text={
+								jsonResponse.windSpeed + ' ' + windSpeedUnit
+							}></WeatherIcon>
 					</div>
 					{/* Text */}
 					<div>
 						<p className="text-sm md:text-base text-center text-white md:mt-3">
-							Thunderstorm with Heavy Drizzle
+							{jsonResponse.weatherDescription}
 						</p>
 					</div>
 				</div>

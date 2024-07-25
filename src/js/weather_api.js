@@ -10,6 +10,12 @@ export async function FetchWeather(cityName, country, units) {
 		let response = await fetch(url).then((res) => res.json());
 
 		let weatherArray = PrepareWeatherJson(response);
+		weatherArray = weatherArray.map((el) => {
+			return {
+				...el,
+				unit: units,
+			};
+		});
 		let finalResponse = {
 			weatherArray,
 			isValid: true,
@@ -30,6 +36,12 @@ export async function FetchFiveDayForecast(cityName, country, units) {
 		const url = `${baseUrl}/data/2.5/forecast?q=${cityName},${countryCode}&units=${units}&appid=${apiKey}&limit=5`;
 		let response = await fetch(url).then((res) => res.json());
 		let weatherArray = PrepareForecastJson(response);
+		weatherArray = weatherArray.map((el) => {
+			return {
+				...el,
+				unit: units,
+			};
+		});
 		let finalResponse = {
 			weatherArray,
 			isValid: true,
@@ -42,29 +54,7 @@ export async function FetchFiveDayForecast(cityName, country, units) {
 }
 
 function PrepareWeatherJson(jsonResponse) {
-	const finalJson = {};
-
-	finalJson.weatherIcon = jsonResponse.weather[0].icon;
-	let date = new Date(jsonResponse.dt * 1000);
-	finalJson.currentDate = date;
-
-	// Should be convertible.
-	finalJson.temperature = jsonResponse.main.temp;
-	finalJson.feelsLike = jsonResponse.main.feels_like;
-	finalJson.temperatureMin = jsonResponse.main.temp_min;
-	finalJson.temperatureMax = jsonResponse.main.temp_max;
-	finalJson.windSpeed = jsonResponse.wind.speed;
-
-	finalJson.weatherDescription = jsonResponse.weather[0].description;
-
-	// In percentage
-	finalJson.humidity = jsonResponse.main.humidity;
-
-	finalJson.cityName = jsonResponse.name;
-
-	// Convert back to full word
-	let fullCountry = lookup.byInternet(jsonResponse.sys.country);
-	finalJson.country = fullCountry.country;
+	let finalJson = PrepareJson(jsonResponse);
 
 	// Convert time
 	let timezone = jsonResponse.timezone;
@@ -74,26 +64,6 @@ function PrepareWeatherJson(jsonResponse) {
 	finalJson.sunrise = ConvertToReadableTime(sunrise);
 	finalJson.sunset = ConvertToReadableTime(sunset);
 
-	/**
-     *  Weather icon
-        Date
-        Temperature (switchable to Metric (c)/Imperial(f))
-        Feels Like (switchable to Metric (c)/Imperial(f))
-        Lowest Temperature (switchable to Metric (c)/Imperial(f))
-        Highest Temperature (switchable to Metric (c)/Imperial(f))
-
-        Weather Description (Rain, Snow, Sunny)
-        Humidity (in percentage)
-        Wind Speed (switchable to Metric (c)/Imperial(f))
-
-        City Name,
-        City Country
-        City Timezone (UTC)
-        city Sunrise (UTC)
-        City Sunset (UTC)
-
-     */
-
 	return [finalJson];
 }
 
@@ -101,23 +71,9 @@ function PrepareForecastJson(jsonResponse) {
 	let weatherArray = [];
 	for (let x = 0; x < jsonResponse.list.length; x++) {
 		const currentWeather = jsonResponse.list[x];
-		const finalJson = {};
 
-		finalJson.weatherIcon = currentWeather.weather[0].icon;
-		let date = new Date(currentWeather.dt * 1000);
-		finalJson.currentDate = date;
-
-		finalJson.temperature = currentWeather.main.temp;
-		finalJson.feelsLike = currentWeather.main.feels_like;
-		finalJson.temperatureMin = currentWeather.main.temp_min;
-		finalJson.temperatureMax = currentWeather.main.temp_max;
-		finalJson.windSpeed = currentWeather.wind.speed;
-
-		finalJson.weatherDescription = currentWeather.weather[0].description;
-
-		// In percentage
-		finalJson.humidity = currentWeather.main.humidity;
-
+		let finalJson = PrepareJson(currentWeather);
+        
 		finalJson.cityName = jsonResponse.city.name;
 
 		// Convert back to full word
@@ -155,6 +111,54 @@ function PrepareForecastJson(jsonResponse) {
 		weatherArray.push(finalJson);
 	}
 	return weatherArray;
+}
+
+function PrepareJson(jsonResponse) {
+	const finalJson = {};
+
+	finalJson.weatherIcon = jsonResponse.weather[0].icon;
+	let date = new Date(jsonResponse.dt * 1000);
+	finalJson.currentDate = date;
+
+	// Should be convertible.
+	finalJson.temperature = jsonResponse.main.temp;
+	finalJson.feelsLike = jsonResponse.main.feels_like;
+	finalJson.temperatureMin = jsonResponse.main.temp_min;
+	finalJson.temperatureMax = jsonResponse.main.temp_max;
+	finalJson.windSpeed = jsonResponse.wind.speed;
+
+	finalJson.weatherDescription = jsonResponse.weather[0].description;
+
+	// In percentage
+	finalJson.humidity = jsonResponse.main.humidity;
+
+	finalJson.cityName = jsonResponse.name;
+
+	// Convert back to full word
+	let fullCountry = lookup.byInternet(jsonResponse.sys.country);
+	finalJson.country = fullCountry.country;
+
+	/**
+     *  Weather icon
+        Date
+        Temperature (switchable to Metric (c)/Imperial(f))
+        Feels Like (switchable to Metric (c)/Imperial(f))
+        Lowest Temperature (switchable to Metric (c)/Imperial(f))
+        Highest Temperature (switchable to Metric (c)/Imperial(f))
+
+        Weather Description (Rain, Snow, Sunny)
+        Humidity (in percentage)
+        Wind Speed (switchable to Metric (c)/Imperial(f))
+
+        City Name,
+        City Country
+        City Timezone (UTC)
+        city Sunrise (UTC)
+        City Sunset (UTC)
+
+     */
+
+	return finalJson;
 }
 
 function ConvertToReadableDate(timestamp) {
