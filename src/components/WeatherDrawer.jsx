@@ -6,52 +6,58 @@ function WeatherDrawer({ jsonResponse, isWeatherCardActive }) {
 	let { weatherMap } = jsonResponse;
 
 	let drawers = [];
-	let css = '';
+
 	if (weatherMap) {
 		let iterator = weatherMap.entries();
 		for (let entry of iterator) {
 			drawers.push(entry[1]);
 		}
 	}
+	let css = '';
+	let borderCss = '';
 	if (drawers.length > 1) {
 		css = 'lg:grid lg:grid-cols-4 ';
+		borderCss = 'border-2 rounded-md';
 	} else {
 		css = 'lg:flex-row ';
+		borderCss = '';
 	}
 	return (
-		<>
-			{/* Closet */}
-			<div className="lg:mx-24 overflow-scroll md:overflow-hidden">
-				{/* Drawers */}
-				{drawers.map((cards) => {
-					return (
+		<div
+			className={
+				'lg:mx-24 overflow-scroll md:overflow-hidden ' +
+				'weather-card ' +
+				(isWeatherCardActive ? 'weather-card-active' : '')
+			}>
+			{/* Drawers */}
+			{drawers.map((cards) => {
+				let drawerKey = `drawer-${item++}`;
+				return (
+					<div className={'my-2 ' + borderCss} key={drawerKey}>
+						<div className="text-white">
+							<p className="text-center text-lg md:text-lg">
+								{cards[0].readableDate}
+							</p>
+						</div>
 						<div
-							key={item++}
 							className={
-								' flex flex-col justify-evenly gap-4 ' +
-								css +
-								'weather-card ' +
-								(isWeatherCardActive
-									? 'weather-card-active'
-									: '')
+								' flex flex-col justify-evenly gap-4 lg:pb-2 ' +
+								css
 							}>
-							<div className="h-4 md:h-min text-white text-center">
-								<p className="text-xs md:text-lg">
-									{cards[0].readableDate}
-								</p>
-							</div>
 							{cards.map((el) => {
 								return (
 									<WeatherCard
-										key={item++}
+										key={
+											`${drawerKey}-weathercard-` + item++
+										}
 										jsonResponse={el}></WeatherCard>
 								);
 							})}
 						</div>
-					);
-				})}
-			</div>
-		</>
+					</div>
+				);
+			})}
+		</div>
 	);
 }
 export default WeatherDrawer;

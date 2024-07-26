@@ -7,7 +7,7 @@ import Sidebar from './components/Sidebar';
 function App() {
 	let [searchSetting, setSearchSetting] = useState({
 		// current of forecast
-		weatherSetting: 'forecast',
+		weatherSetting: 'current',
 
 		// metric or imperial
 		units: 'metric',

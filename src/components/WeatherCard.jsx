@@ -36,8 +36,10 @@ function WeatherCard({ jsonResponse }) {
 					{/* Hero Weather */}
 					<div className="text-white h-full flex flex-col md:items-center">
 						{/* TIME */}
-						<div className="h-4 md:h-min">
-							<p className="text-xs md:text-lg">00:00</p>
+						<div className="">
+							<p className="text-lg text-center">
+								{jsonResponse.currentTime}
+							</p>
 						</div>
 						{/* Temperatures */}
 						<div className="flex-grow flex items-center md:gap-7">

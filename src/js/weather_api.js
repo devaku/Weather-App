@@ -10,7 +10,7 @@ export async function FetchWeather(cityName, country, units) {
 		let response = await fetch(url).then((res) => res.json());
 
 		let weatherArray = PrepareWeatherJson(response);
-		weatherMap = PrepareDrawerJson(weatherArray, units);
+		let weatherMap = PrepareDrawerJson(weatherArray, units);
 
 		// Get the first key
 		let firstKey = weatherMap.keys();
@@ -170,6 +170,7 @@ function PrepareCardJson(jsonResponse) {
 	let date = new Date(jsonResponse.dt * 1000);
 	finalJson.currentDate = date;
 
+	finalJson.currentTime = ConvertToReadableTime(date);
 	finalJson.currentDay = daysOfTheWeek[date.getDay()];
 	finalJson.readableDate = ConvertToReadableDate(date);
 
@@ -239,15 +240,15 @@ function ConvertToReadableDate(timestamp) {
 	let month = timestamp.getMonth();
 	let year = timestamp.getFullYear();
 
-	let finalTime = `${monthsOfTheYear[month]}, ${date}, ${year}`;
+	let finalTime = `${daysOfTheWeek[day]}, ${monthsOfTheYear[month]} ${date}, ${year}`;
 
 	return finalTime;
 }
 
 function ConvertToReadableTime(timestamp) {
-	let hours = timestamp.getUTCHours().toString();
-	let minutes = timestamp.getUTCMinutes().toString();
-	let seconds = timestamp.getUTCSeconds().toString();
+	let hours = timestamp.getHours().toString();
+	let minutes = timestamp.getMinutes().toString();
+	let seconds = timestamp.getSeconds().toString();
 
 	let finalTime = `${hours.padStart(2, '0')}:${minutes.padStart(
 		2,
