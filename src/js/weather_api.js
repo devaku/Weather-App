@@ -10,14 +10,18 @@ export async function FetchWeather(cityName, country, units) {
 		let response = await fetch(url).then((res) => res.json());
 
 		let weatherArray = PrepareWeatherJson(response);
-		weatherArray = weatherArray.map((el) => {
-			return {
-				...el,
-				unit: units,
-			};
-		});
+		weatherMap = PrepareDrawerJson(weatherArray, units);
+
+		// Get the first key
+		let firstKey = weatherMap.keys();
+		firstKey = firstKey.next().value;
+		let firstEntry = weatherMap.get(firstKey);
+		let extractedCity = firstEntry[0].cityName;
+		let extractedCountry = firstEntry[0].country;
 		let finalResponse = {
-			weatherArray,
+			weatherMap,
+			extractedCity,
+			extractedCountry,
 			isValid: true,
 		};
 		return finalResponse;
@@ -36,16 +40,21 @@ export async function FetchFiveDayForecast(cityName, country, units) {
 		const url = `${baseUrl}/data/2.5/forecast?q=${cityName},${countryCode}&units=${units}&appid=${apiKey}&limit=5`;
 		let response = await fetch(url).then((res) => res.json());
 		let weatherArray = PrepareForecastJson(response);
-		weatherArray = weatherArray.map((el) => {
-			return {
-				...el,
-				unit: units,
-			};
-		});
+		let weatherMap = PrepareDrawerJson(weatherArray, units);
+
+		// Get the first key
+		let firstKey = weatherMap.keys();
+		firstKey = firstKey.next().value;
+		let firstEntry = weatherMap.get(firstKey);
+		let extractedCity = firstEntry[0].cityName;
+		let extractedCountry = firstEntry[0].country;
 		let finalResponse = {
-			weatherArray,
+			weatherMap,
+			extractedCity,
+			extractedCountry,
 			isValid: true,
 		};
+
 		return finalResponse;
 	} catch (e) {
 		console.log(e);
@@ -54,7 +63,7 @@ export async function FetchFiveDayForecast(cityName, country, units) {
 }
 
 function PrepareWeatherJson(jsonResponse) {
-	let finalJson = PrepareJson(jsonResponse);
+	let finalJson = PrepareCardJson(jsonResponse);
 
 	finalJson.cityName = jsonResponse.name;
 
@@ -69,7 +78,6 @@ function PrepareWeatherJson(jsonResponse) {
 
 	finalJson.sunrise = ConvertToReadableTime(sunrise);
 	finalJson.sunset = ConvertToReadableTime(sunset);
-
 	return [finalJson];
 }
 
@@ -78,7 +86,7 @@ function PrepareForecastJson(jsonResponse) {
 	for (let x = 0; x < jsonResponse.list.length; x++) {
 		const currentWeather = jsonResponse.list[x];
 
-		let finalJson = PrepareJson(currentWeather);
+		let finalJson = PrepareCardJson(currentWeather);
 
 		finalJson.cityName = jsonResponse.city.name;
 
@@ -116,15 +124,54 @@ function PrepareForecastJson(jsonResponse) {
 
 		weatherArray.push(finalJson);
 	}
+
 	return weatherArray;
 }
 
-function PrepareJson(jsonResponse) {
+function PrepareDrawerJson(weatherArray, units) {
+	weatherArray = weatherArray.map((el) => {
+		return {
+			...el,
+			unit: units,
+		};
+	});
+
+	let temp = [...new Set(weatherArray.map((item) => item.currentDay))];
+	let daysOftheWeek = temp.map((el) => {
+		return {
+			currentDay: el,
+		};
+	});
+
+	let result = Map.groupBy(weatherArray, ({ currentDay }) => {
+		let final = daysOftheWeek.filter((el) => {
+			return el.currentDay == currentDay;
+		});
+		return final[0];
+	});
+
+	return result;
+}
+
+function PrepareCardJson(jsonResponse) {
 	const finalJson = {};
+
+	const daysOfTheWeek = [
+		'Sunday',
+		'Monday',
+		'Tuesday',
+		'Wednesday',
+		'Thursday',
+		'Friday',
+		'Saturday',
+	];
 
 	finalJson.weatherIcon = jsonResponse.weather[0].icon;
 	let date = new Date(jsonResponse.dt * 1000);
 	finalJson.currentDate = date;
+
+	finalJson.currentDay = daysOfTheWeek[date.getDay()];
+	finalJson.readableDate = ConvertToReadableDate(date);
 
 	// Should be convertible.
 	finalJson.temperature = jsonResponse.main.temp;
@@ -187,12 +234,12 @@ function ConvertToReadableDate(timestamp) {
 		'December',
 	];
 
-	let day = int(timestamp.getUTCDay());
-	let month = int(timestamp.getUTCMonth());
-	let date = timestamp.getUTCDate();
-	let year = timestamp.getUTCFullYear();
+	let day = timestamp.getDay();
+	let date = timestamp.getDate();
+	let month = timestamp.getMonth();
+	let year = timestamp.getFullYear();
 
-	let finalTime = `${daysOfTheWeek[day]}, ${monthsOfTheYear[month]}, ${date}, ${year}`;
+	let finalTime = `${monthsOfTheYear[month]}, ${date}, ${year}`;
 
 	return finalTime;
 }

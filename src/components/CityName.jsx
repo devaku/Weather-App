@@ -2,10 +2,8 @@ function CityName(props) {
 	const { isCityCardActive, jsonResponse } = props;
 	let cityName, country;
 	if (jsonResponse) {
-		cityName = jsonResponse.weatherArray[0].cityName
-			? jsonResponse.weatherArray[0].cityName
-			: '';
-		country = jsonResponse.weatherArray[0].country;
+		cityName = jsonResponse.extractedCity ? jsonResponse.extractedCity : '';
+		country = jsonResponse.extractedCountry;
 	}
 
 	return (
@@ -18,11 +16,6 @@ function CityName(props) {
 					}>
 					<div>
 						{cityName}, {country}
-					</div>
-					<div className="h-4 md:h-min text-white text-center">
-						<p className="text-xs md:text-lg">
-							Monday, Day, September, YEAR
-						</p>
 					</div>
 				</div>
 			</div>
