@@ -1,7 +1,7 @@
-// import magnifyingGlass from '../assets/magnifying_glass.svg';
 import SvgMagnifyingGlass from './svgs/SvgMagnifyingGlass';
 import SvgBurger from './svgs/SvgBurger';
 import { FetchWeather, FetchFiveDayForecast } from '../js/weather_api';
+import { useState } from 'react';
 
 function SearchBar({
 	setJsonResponse,
@@ -10,6 +10,8 @@ function SearchBar({
 	setDisplaySidebar,
 	searchSetting,
 }) {
+	let [displayError, setDisplayError] = useState(false);
+	let [errorMessage, setErrorMessage] = useState('');
 	function displayPage() {
 		return new Promise((resolve) => {
 			setTimeout(() => {
@@ -24,15 +26,25 @@ function SearchBar({
 		e.stopPropagation();
 		setIsCityCardActive(false);
 		setIsWeatherCardActive(false);
-		let [cityName, country = ''] = e.target.value.split(',');
-		// TODO add handling if null is the response
 
-		let promiseAll = await Promise.all([
-			fetchData(cityName, country, searchSetting),
-			displayPage(),
-		]);
-		let jsonResponse = promiseAll[0];
-		setJsonResponse(jsonResponse);
+		if (!e.target.value) {
+			alert('Blank is not allowed.');
+			return;
+		}
+		let [cityName, country = ''] = e.target.value.split(',');
+
+		let jsonResponse = await fetchData(cityName, country, searchSetting);
+		if (!jsonResponse.isValid) {
+			errorMessage = JSON.stringify(jsonResponse);
+			setErrorMessage(errorMessage);
+			setJsonResponse({
+				weatherArray: [{}],
+			});
+			setDisplayError(true);
+		} else {
+			await displayPage();
+			setJsonResponse(jsonResponse);
+		}
 	}
 
 	async function handleKeyDown(e) {
@@ -40,19 +52,31 @@ function SearchBar({
 		if (e.key == 'Enter') {
 			setIsCityCardActive(false);
 			setIsWeatherCardActive(false);
+			if (!e.target.value) {
+				alert('Blank is not allowed.');
+				return;
+			}
 			let [cityName, country = ''] = e.target.value.split(',');
 
 			cityName = cityName.trim();
 			country = country.trim();
-			// TODO add handling if null is the response
 
-			let promiseAll = await Promise.all([
-				fetchData(cityName, country, searchSetting),
-				displayPage(),
-			]);
-
-			let jsonResponse = promiseAll[0];
-			setJsonResponse(jsonResponse);
+			let jsonResponse = await fetchData(
+				cityName,
+				country,
+				searchSetting
+			);
+			if (!jsonResponse.isValid) {
+				errorMessage = JSON.stringify(jsonResponse);
+				setErrorMessage(errorMessage);
+				setJsonResponse({
+					weatherArray: [{}],
+				});
+				setDisplayError(true);
+			} else {
+				await displayPage();
+				setJsonResponse(jsonResponse);
+			}
 		}
 	}
 
@@ -79,19 +103,19 @@ function SearchBar({
 		e.stopPropagation();
 		setDisplaySidebar(true);
 	}
+
+	function handleClearError(e) {
+		e.stopPropagation();
+		setDisplayError(false);
+	}
 	return (
-		<>
+		<div className="relative ">
 			<div className="flex items-center sm:w-full md:mx-auto md:w-4/12">
 				{/* Burger */}
 				<div onClick={handleClick}>
 					<div className="w-[50px]">
 						<SvgBurger twColor="fill-white"></SvgBurger>
 					</div>
-					{/* <img
-						className="w-[50px]"
-						src={svgBurger({ twColor: 'fill-white' })}
-						alt="Burger Menu"
-					/> */}
 				</div>
 				<div className="m-2.5 w-full bg-white flex rounded-md">
 					{/* Textbox */}
@@ -112,17 +136,27 @@ function SearchBar({
 						<div className="w-[50px]" onClick={handleSubmit}>
 							<SvgMagnifyingGlass twColor="fill-white"></SvgMagnifyingGlass>
 						</div>
-
-						{/* <img
-							className="w-[50px] invert"
-							src={magnifyingGlass}
-							alt="Search"
-							onClick={handleSubmit}
-						/> */}
 					</div>
 				</div>
 			</div>
-		</>
+			<div
+				className={
+					'absolute w-full rounded-md bg-coa text-white ' +
+					(displayError ? '' : 'hidden')
+				}>
+				<div className="flex flex-col items-center justify-center p-2 text-black overflow-hidden">
+					<div>Error!</div>
+					<div>{errorMessage}</div>
+					<div className="my-2">
+						<button
+							onClick={handleClearError}
+							className="bg-yellow-300 px-5 rounded-md hover:bg-yellow-600">
+							Clear
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	);
 }
 

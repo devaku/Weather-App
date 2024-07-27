@@ -24,10 +24,13 @@ export async function FetchWeather(cityName, country, units) {
 			extractedCountry,
 			isValid: true,
 		};
+
 		return finalResponse;
 	} catch (e) {
-		console.log(e);
-		return e;
+		return {
+			message: e.toString(),
+			isValid: false,
+		};
 	}
 }
 
@@ -57,8 +60,10 @@ export async function FetchFiveDayForecast(cityName, country, units) {
 
 		return finalResponse;
 	} catch (e) {
-		console.log(e);
-		return e;
+		return {
+			message: e.toString(),
+			isValid: false,
+		};
 	}
 }
 
