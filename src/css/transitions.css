@@ -1,0 +1,27 @@
+/* Transitions */
+
+.side-bar {
+	transition: bottom 0.5s ease-in-out;
+}
+
+.slide-in-from-top {
+	bottom: 0;
+}
+
+.slide-out-to-top {
+	bottom: 100vh;
+}
+
+.transition-fade-in {
+	transition: opacity 1s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.transition-fade-in-from-left-start {
+	transform: translateX(24rem);
+	opacity: 0%;
+}
+
+.transition-fade-in-from-left-end {
+	transform: translateX(0);
+	opacity: 100%;
+}

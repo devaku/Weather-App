@@ -1,3 +1,12 @@
+# Dev
+.env 
+scratch.txt
+todo.txt
+/src/css/output.css
+/src/components/Scratch.jsx
+/debug
+
+
 # Logs
 logs
 *.log

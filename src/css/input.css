@@ -1,3 +1,52 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import './transitions.css';
+
+.hidden {
+	display: none;
+}
+.unselectable {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+/* Transitions */
+
+.side-bar {
+	transition: bottom 0.5s ease-in-out;
+}
+
+.slide-in-from-top {
+	bottom: 0;
+}
+
+.slide-out-to-top {
+	bottom: 100vh;
+}
+
+.weather-card {
+	transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+	transform: translateY(12rem);
+	opacity: 0;
+}
+
+.weather-card-active {
+	transform: translateY(0);
+	opacity: 1;
+}
+
+.city-card {
+	transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+	transform: translateX(12rem);
+	opacity: 0%;
+}
+
+.city-card-active {
+	transform: translateX(0);
+	opacity: 100%;
+}
