@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev-vite": "vite",
 		"dev-tailwind": "npx tailwindcss -i ./src/css/input.css -o ./src/css/output.css --watch",
-		"build": "npm run build-vite && npm run build-vite",
+		"build": "npm run build-tailwind && npm run build-vite",
 		"build-vite": "vite build",
 		"build-tailwind": "npx tailwindcss -i ./src/css/input.css -o ./src/css/output.css",
 		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
