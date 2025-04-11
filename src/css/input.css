@@ -15,6 +15,10 @@
 	user-select: none;
 }
 
+.display-linebreak {
+	white-space: pre-line;
+}
+
 /* Transitions */
 
 .side-bar {
@@ -48,5 +52,17 @@
 
 .city-card-active {
 	transform: translateX(0);
+	opacity: 100%;
+}
+
+.error-message {
+	transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+	transform: translateY(3rem);
+	opacity: 0%;
+}
+
+.error-message-active {
+	transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+	transform: translateY(0);
 	opacity: 100%;
 }

@@ -12,6 +12,7 @@ function SearchBar({
 }) {
 	let [displayError, setDisplayError] = useState(false);
 	let [errorMessage, setErrorMessage] = useState('');
+	let [locationText, setLocationText] = useState('');
 	function displayPage() {
 		return new Promise((resolve) => {
 			setTimeout(() => {
@@ -24,14 +25,51 @@ function SearchBar({
 
 	async function handleSubmit(e) {
 		e.stopPropagation();
+		setDisplayError(false);
 		setIsCityCardActive(false);
 		setIsWeatherCardActive(false);
 
-		if (!e.target.value) {
+		if (!locationText) {
 			alert('Blank is not allowed.');
 			return;
 		}
-		let [cityName, country = ''] = e.target.value.split(',');
+
+		let [cityName, country = ''] = locationText.split(',');
+
+		await processData(cityName, country);
+	}
+
+	async function handleKeyDown(e) {
+		e.stopPropagation();
+
+		if (e.key == 'Enter') {
+			setDisplayError(false);
+			setIsCityCardActive(false);
+			setIsWeatherCardActive(false);
+			if (!e.target.value) {
+				alert('Blank is not allowed.');
+				return;
+			}
+			let [cityName, country = ''] = e.target.value.split(',');
+
+			await processData(cityName, country);
+		}
+	}
+
+	async function processData(cityName, country) {
+		cityName = cityName.trim();
+		country = country.trim();
+
+		if (!cityName || !country) {
+			setErrorMessage(
+				'City name or country is blank. \n Try typing your location in the following format: \n City, Country'
+			);
+			setJsonResponse({
+				weatherArray: [{}],
+			});
+			setDisplayError(true);
+			return;
+		}
 
 		let jsonResponse = await fetchData(cityName, country, searchSetting);
 		if (!jsonResponse.isValid) {
@@ -44,39 +82,6 @@ function SearchBar({
 		} else {
 			await displayPage();
 			setJsonResponse(jsonResponse);
-		}
-	}
-
-	async function handleKeyDown(e) {
-		e.stopPropagation();
-		if (e.key == 'Enter') {
-			setIsCityCardActive(false);
-			setIsWeatherCardActive(false);
-			if (!e.target.value) {
-				alert('Blank is not allowed.');
-				return;
-			}
-			let [cityName, country = ''] = e.target.value.split(',');
-
-			cityName = cityName.trim();
-			country = country.trim();
-
-			let jsonResponse = await fetchData(
-				cityName,
-				country,
-				searchSetting
-			);
-			if (!jsonResponse.isValid) {
-				errorMessage = JSON.stringify(jsonResponse);
-				setErrorMessage(errorMessage);
-				setJsonResponse({
-					weatherArray: [{}],
-				});
-				setDisplayError(true);
-			} else {
-				await displayPage();
-				setJsonResponse(jsonResponse);
-			}
 		}
 	}
 
@@ -99,6 +104,10 @@ function SearchBar({
 		return jsonResponse;
 	}
 
+	function handleOnChange(e) {
+		setLocationText(e.target.value);
+	}
+
 	function handleClick(e) {
 		e.stopPropagation();
 		setDisplaySidebar(true);
@@ -109,7 +118,7 @@ function SearchBar({
 		setDisplayError(false);
 	}
 	return (
-		<div className="relative ">
+		<div className="relative">
 			<div className="flex items-center sm:w-full md:mx-auto md:w-4/12">
 				{/* Burger */}
 				<div onClick={handleClick}>
@@ -126,6 +135,7 @@ function SearchBar({
 							placeholder="Enter City Name, and Country"
 							name=""
 							maxLength={100}
+							onChange={handleOnChange}
 							onKeyDown={handleKeyDown}
 							id=""
 						/>
@@ -141,12 +151,12 @@ function SearchBar({
 			</div>
 			<div
 				className={
-					'absolute w-full rounded-md bg-coa text-white ' +
-					(displayError ? '' : 'hidden')
+					'absolute w-full md:left-[38%] md:w-fit rounded-md bg-coa text-white ' +
+					(displayError ? 'error-message-active' : 'error-message')
 				}>
 				<div className="flex flex-col items-center justify-center p-2 text-black overflow-hidden">
 					<div>Error!</div>
-					<div>{errorMessage}</div>
+					<div className="display-linebreak">{errorMessage}</div>
 					<div className="my-2">
 						<button
 							onClick={handleClearError}
