@@ -1,5 +1,5 @@
 const apiKey = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
-const baseUrl = 'http://api.openweathermap.org';
+const baseUrl = 'https://api.openweathermap.org';
 import * as lookup from 'country-code-lookup';
 
 export async function FetchWeather(cityName, country, units) {
