@@ -15,7 +15,8 @@ function CityName(props) {
 						(isCityCardActive ? 'city-card-active' : '')
 					}>
 					<div>
-						{cityName}, {country}
+						{cityName}
+						{cityName ? ',' : ''} {country}
 					</div>
 				</div>
 			</div>
